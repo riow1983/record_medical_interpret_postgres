@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, send_file
+from flask import Flask, render_template, request, send_file, flash, redirect, url_for
 import sqlite3 as sql
 import numpy as np
 import matplotlib.pyplot as plt
@@ -9,6 +9,7 @@ from functools import reduce
 #import io as cStringIO
 from io import BytesIO
 app = Flask(__name__)
+app.secret_key = 'some_secret'
 
 @app.route('/')
 def home():
@@ -90,60 +91,67 @@ def fig():
             tmp = tmp.set_index("personnel").T
             tmp["month"] = month
             res.append(tmp)
-
-        dfc = reduce(lambda x,y: pd.concat([x,y]), res)
-        dfc = dfc.set_index("month")
-        dfc = dfc.fillna(0)
         
-        dfc = dfc.sort_index()
-        col = dfc.columns.tolist()
-        rows = dfc.index.tolist()
-        data = dfc
-        columns = col
-        rows = rows
+        try:
+            dfc = reduce(lambda x,y: pd.concat([x,y]), res)
+            
+            dfc = dfc.set_index("month")
+            dfc = dfc.fillna(0)
+        
+            dfc = dfc.sort_index()
+            col = dfc.columns.tolist()
+            rows = dfc.index.tolist()
+            data = dfc
+            columns = col
+            rows = rows
 
-        # Get some pastel shades for the colors
-        colors = plt.cm.BuPu(np.linspace(0, 0.5, len(rows)))
-        n_rows = len(data)
+            # Get some pastel shades for the colors
+            colors = plt.cm.BuPu(np.linspace(0, 0.5, len(rows)))
+            n_rows = len(data)
 
-        index = np.arange(len(columns)) + 0.3
-        bar_width = 0.4
+            index = np.arange(len(columns)) + 0.3
+            bar_width = 0.4
 
-        # Initialize the vertical-offset for the stacked bar chart.
-        y_offset = np.array([0.0] * len(columns))
+            # Initialize the vertical-offset for the stacked bar chart.
+            y_offset = np.array([0.0] * len(columns))
 
-        plt.figure()
+            plt.figure()
 
-        # Plot bars and create text labels for the table
-        cell_text = []
-        for row in range(n_rows):
-            plt.bar(index, data.iloc[row,:], bar_width, bottom=y_offset, color=colors[row])
-            y_offset = y_offset + data.iloc[row,:]
-            cell_text.append(['%s' % x for x in data.iloc[row,:]])
-        # Reverse colors and text labels to display the last value at the top.
-        #colors = colors[::-1]
-        #cell_text.reverse()
+            # Plot bars and create text labels for the table
+            cell_text = []
+            for row in range(n_rows):
+                plt.bar(index, data.iloc[row,:], bar_width, bottom=y_offset, color=colors[row])
+                y_offset = y_offset + data.iloc[row,:]
+                cell_text.append(['%s' % x for x in data.iloc[row,:]])
+            # Reverse colors and text labels to display the last value at the top.
+            #colors = colors[::-1]
+            #cell_text.reverse()
 
-        # Add a table at the bottom of the axes
-        the_table = plt.table(cellText=cell_text,
-                              rowLabels=rows,
-                              rowColours=colors,
-                              colLabels=columns,
-                              loc='bottom')
+            # Add a table at the bottom of the axes
+            the_table = plt.table(cellText=cell_text,
+                                  rowLabels=rows,
+                                  rowColours=colors,
+                                  colLabels=columns,
+                                  loc='bottom')
 
-        # Adjust layout to make room for the table:
-        plt.subplots_adjust(left=0.2, bottom=0.2)
+            # Adjust layout to make room for the table:
+            plt.subplots_adjust(left=0.2, bottom=0.2)
 
-        plt.ylabel("Time Required (m)")
-        #plt.yticks(values * value_increment, ['%d' % val for val in values])
-        plt.xticks([])
-        plt.title('English Translation Support')
+            plt.ylabel("Time Required (m)")
+            #plt.yticks(values * value_increment, ['%d' % val for val in values])
+            plt.xticks([])
+            plt.title('English Translation Support')
 
-        ##image = cStringIO.StringIO()
-        image = BytesIO()
-        plt.savefig(image, format='png')
-        image.seek(0)
-        return send_file(image, attachment_filename="image.png", as_attachment=True)
+            ##image = cStringIO.StringIO()
+            image = BytesIO()
+            plt.savefig(image, format='png')
+            image.seek(0)
+            return send_file(image, attachment_filename="image.png", as_attachment=True)
+        except:
+            flash("There is no data.")
+            return redirect(url_for('data'))
+            
+
 
         conn.close()
 
