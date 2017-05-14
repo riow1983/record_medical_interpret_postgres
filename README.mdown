@@ -44,21 +44,20 @@ https://matplotlib.org/examples/pylab_examples/table_demo.html
 - Vue.js
 - bootstrap.css
 
-#### Structure
-/Flask<br>
- /static<br>
-  vue.js<br>
-  style.css<br>
-  bootstrap.css<br>
- /templates<br>
-  home.html<br>
-  report.html<br>
-  result.html<br>
-  list.html<br>
-  data.html<br>
- app.py
-
-
+#### Directory Structure
+.
+├── app.py
+├── README.md
+├── static
+|   ├── vue.js
+|   |── style.css
+|   └── bootstrap.css
+└── templates
+    ├── home.html
+    |── report.html
+    ├── result.html
+    |── list.html
+    └── data.html
 
 
 ##### 改修予定リスト
