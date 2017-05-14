@@ -44,21 +44,6 @@ https://matplotlib.org/examples/pylab_examples/table_demo.html
 - Vue.js
 - bootstrap.css
 
-#### Directory Structure
-.
-├── app.py<br>
-├── README.md<br>
-├── static<br>
-|   ├── vue.js<br>
-|   |── style.css<br>
-|   └── bootstrap.css<br>
-└── templates<br>
-    ├── home.html<br>
-    |── report.html<br>
-    ├── result.html<br>
-    |── list.html<br>
-    └── data.html<br>
-
 
 ##### 改修予定リスト
 - 機能３で集計期間に対応情報が皆無だった場合Flaskのエラーページに飛んでしまう(functool.reduceのエラー)
