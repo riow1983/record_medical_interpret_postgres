@@ -34,8 +34,36 @@ matplotlibを使っています。集計にはpandasを使っています。バ�
 https://matplotlib.org/examples/pylab_examples/table_demo.html
 
 
+#### Requirements(すみません、バージョンとか細かいことは省略させてください)
+- Python3
+- Flask
+- SQLite3
+- matplotlib
+- pandas
+- numpy
+- Vue.js
+- bootstrap.css
+
+#### Structure
+/Flask<br>
+ /static<br>
+  vue.js<br>
+  style.css<br>
+  bootstrap.css<br>
+ /templates<br>
+  home.html<br>
+  report.html<br>
+  result.html<br>
+  list.html<br>
+  data.html<br>
+ app.py
+
+
+
+
 ##### 改修予定リスト
-- 機能３で集計期間に対応情報が皆無だった場合Flaskのエラーページに飛んでしまうが、エラー処理を書き加えてポップアップメッセージ「集計期間にデータはありませんでした。」を出すなどエレガントな対応をしたい。
+- 機能３で集計期間に対応情報が皆無だった場合Flaskのエラーページに飛んでしまう(functool.reduceのエラー)
+が、エラー処理を書き加えてポップアップメッセージ「集計期間にデータはありませんでした。」を出すなどエレガントな対応をしたい。
 
 - 機能２の対応記録表で一番必要になるのはサマリーの列だが、左端で列幅が狭いなどやや見にくいので何とかする。
 
