@@ -1,0 +1,47 @@
+<html>
+<head>
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='bootstrap.css') }}">
+</head>
+  <body>
+
+
+    <form action = "{{ url_for('addrec') }}" method = "POST">
+      <h3>Translation Report</h3>
+     
+      Personnel<br>
+      <select name = "personnel">
+        <option value="ryosuke HORIUCHI">ryosuke HORIUCHI</option>
+        <option value="personnel A">personnel A</option>
+        <option value="personnel B">personnel B</option>
+      </select><br>
+
+      Starttime<br>
+      <input type = "datetime-local" name = "start" min = "2015-06-01T08:30" required><br>
+
+      Endtime<br>
+      <input type = "datetime-local" name = "end" min = "2015-06-01T08:30" required><br>
+      
+      Client<br>
+      <input type = "text" name = "client"><br>
+
+      Section<br>
+      <input type = "text" name = "section"><br>
+
+      Patient<br>
+      <input type = "radio" name = "pt" value = "outpatient" required>outpatient
+      <input type = "radio" name = "pt" value = "inpatient">inpatient<br>
+
+      Country<br>
+      <input type = "text" name = "country"><br>
+
+      Summary<br>
+      <textarea class="form-control" rows="10" name = "summary"></textarea><br>
+      <button type="submit" class="btn btn-primary">Submit</button>
+      <!--
+      <input type = "submit" value = "submit"><br>
+      -->
+    </form>
+  
+
+  </body>
+</html>

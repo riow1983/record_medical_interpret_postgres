@@ -1,0 +1,28 @@
+<html>
+<head>
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='bootstrap.css') }}">
+</head>
+
+  <body>
+
+
+  <form action = "{{ url_for('fig') }}" method = "POST">
+    <h3>Data</h3>
+
+    Start<br>
+     <input type = "month" name = "start" min = "2015-06" required><br>
+
+    End<br>
+     <input type = "month" name = "end" min = "2015-06" required><br>
+     
+     <button type="submit" class="btn btn-primary">Get</button>
+     <!--
+     <input type = "submit" value = "get figure"><br>
+     -->
+  </form>
+
+
+    <h2><a href = "/">go back to home page</a></h2>
+
+  </body>
+</html>
