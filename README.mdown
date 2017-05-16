@@ -37,12 +37,40 @@ https://matplotlib.org/examples/pylab_examples/table_demo.html
 #### Requirements(すみません、バージョンとか細かいことは省略させてください)
 - Python3
 - Flask
+- Jinja2
 - SQLite3
 - matplotlib
 - pandas
 - numpy
 - Vue.js
 - bootstrap.css
+
+
+#### ちょっと工夫が必要だったところ
+Vue.jsとJinja2が同じ{{}}mustache記法を採用しているため、バッティングを起こさないよう、Vue.js側にdelimitersを指定してやる必要がありました。
+```JavaScript
+var demo = new Vue({
+  el: '#demo',
+  delimiters: ["[[","]]"],
+  data: {
+    searchQuery: '',
+    gridColumns: ['Personnel', 'Start', 'End', 'Client', 'Section', 'Patient', 'Country', 'Summary'],
+    gridData: [
+    {% for row in rows %}
+      { 
+        Personnel: '{{ row["personnel"] }}', 
+        Start: '{{ row["starttime"] }}', 
+        End: '{{ row["endtime"] }}', 
+        Client: '{{ row["client"] }}', 
+        Section: '{{ row["section"] }}', 
+        Patient: '{{ row["patient"] }}', 
+        Country: '{{ row["country"] }}',
+        Summary: {{ row["summary"].splitlines()|safe }} },
+    {% endfor %}
+    ]
+  }
+})
+```
 
 
 ##### 改修予定リスト
