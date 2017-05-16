@@ -1,6 +1,6 @@
 flask==0.12
 Jinja2==2.9.4
-werkseug==0.11.15
+werkzeug==0.11.15
 sqlite==3.13.0
 pandas==0.19.2
 matplotlib==2.0.0
