@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, send_file, flash, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 
-#from flask_heroku import Heroku
+from flask_heroku import Heroku
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -10,8 +10,8 @@ from functools import reduce
 from io import BytesIO
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/english'
-#heroku = Heroku(app)
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/english'
+heroku = Heroku(app)
 app.secret_key = 'some_secret'
 db = SQLAlchemy(app)
 

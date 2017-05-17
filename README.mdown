@@ -1,5 +1,6 @@
 # The record system for medical interpretation in a hospital（English only)
 ### 医療通訳担当者（英語）のための通訳後記（反省録）保管システム
+### for PosgreSQL
 
 
 医療機関のスタッフが医療通訳の現場経験を記録しておき、後学に生かすためのシステムです。
@@ -16,7 +17,7 @@
 - 外国人患者さんの国籍
 - サマリー
 
-データベースはSQLite3を使用。同時多発的書き込みに対応するため将来的にはPosgresに変更予定。
+~~データベースはSQLite3を使用。同時多発的書き込みに対応するため将来的にはPosgresに変更予定。~~
 
 
 #### 機能２：　対応記録表の表示（データベースのテーブルを表示）
@@ -36,14 +37,27 @@ https://matplotlib.org/examples/pylab_examples/table_demo.html
 
 #### Requirements(すみません、バージョンとか細かいことは省略させてください)
 - Python3
-- Flask
-- Jinja2
-- SQLite3
-- matplotlib
-- pandas
-- numpy
-- Vue.js
-- bootstrap.css
+- appdirs==1.4.3
+- click==6.7
+- cycler==0.10.0
+- Flask==0.12.2
+- flask-heroku==0.1.9
+- Flask-SQLAlchemy==2.2
+- gunicorn==19.7.1
+- itsdangerous==0.24
+- Jinja2==2.9.6
+- MarkupSafe==1.0
+- matplotlib==2.0.2
+- numpy==1.12.1
+- packaging==16.8
+- pandas==0.20.1
+- psycopg2==2.7.1
+- pyparsing==2.2.0
+- python-dateutil==2.6.0
+- pytz==2017.2
+- six==1.10.0
+- SQLAlchemy==1.1.9
+- Werkzeug==0.12.2
 
 
 #### ちょっと工夫が必要だったところ
@@ -79,4 +93,4 @@ var demo = new Vue({
 
 - 機能２の対応記録表で一番必要になるのはサマリーの列だが、左端で列幅が狭いなどやや見にくいので何とかする。
 
-- ５人程度の少人数で使用するならばSQLite3で問題ないと思うが、それ以上になるとやはりサーバ型のデータベースが欲しい。近いうちにPosgresバージョンを公開したい。
+~~- ５人程度の少人数で使用するならばSQLite3で問題ないと思うが、それ以上になるとやはりサーバ型のデータベースが欲しい。近いうちにPosgresバージョンを公開したい。~~
