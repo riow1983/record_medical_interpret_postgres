@@ -1,15 +1,49 @@
 from flask import Flask, render_template, request, send_file, flash, redirect, url_for
-import sqlite3 as sql
+from flask_sqlalchemy import SQLAlchemy
+
+#from flask_heroku import Heroku
+
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 from functools import reduce
-#from cStringIO import StringIO
-#import StringIO
-#import io as cStringIO
 from io import BytesIO
+
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/english'
+#heroku = Heroku(app)
 app.secret_key = 'some_secret'
+db = SQLAlchemy(app)
+
+
+# Create our database model(database name: english)
+class Report(db.Model):
+    __tablename__ = "report"
+    id = db.Column(db.Integer, primary_key=True)
+    personnel = db.Column(db.Text) 
+    starttime = db.Column(db.DateTime) 
+    endtime = db.Column(db.DateTime) 
+    client = db.Column(db.Text) 
+    section = db.Column(db.Text) 
+    patient = db.Column(db.Text) 
+    country = db.Column(db.Text) 
+    summary = db.Column(db.Text)
+
+    def __init__(self, personnel, starttime, endtime, client, section, patient, country, summary):
+        self.personnel = personnel
+        self.starttime = starttime
+        self.endtime = endtime
+        self.client = client
+        self.section = section
+        self.patient = patient
+        self.country = country
+        self.summary = summary
+
+    def __repr__(self):
+        return '<Personnel %r>' % self.personnel
+
+
+
 
 @app.route('/')
 def home():
@@ -22,9 +56,9 @@ def new_student():
 @app.route('/addrec', methods = ['POST', 'GET'])
 def addrec():
     if request.method == 'POST':
-        conn = sql.connect("database.db")
+        #conn = sql.connect("database.db")
         #conn.row_factory = sql.Row
-        cur = conn.cursor()
+        #cur = conn.cursor()
         try:
             personnel = request.form['personnel']
             starttime = request.form['start']
@@ -35,29 +69,35 @@ def addrec():
             country = request.form['country']
             summary = request.form['summary']
 
-            cur.execute("INSERT INTO report (personnel,starttime,endtime,client,section,patient,country,summary) VALUES (?,?,?,?,?,?,?,?)", (personnel,starttime,endtime,client,section,patient,country,summary))
-            conn.commit()
+            #cur.execute("INSERT INTO report (personnel,starttime,endtime,client,section,patient,country,summary) VALUES (?,?,?,?,?,?,?,?)", (personnel,starttime,endtime,client,section,patient,country,summary))
+            #conn.commit()
+            reg = User(personnel, starttime, endtime, client, section, patient, country, summary)
+            db.session.add(reg)
+            db.session.commit()
             msg = "Record successfully added"
 
         except:
-            conn.rollback()
+            #conn.rollback()
+            db.session.rollback()
             msg = "error in insert operation"
 
         finally:
             return render_template("result.html", msg = msg)
-            conn.close()
+            #conn.close()
+            db.session.close()
 
 @app.route('/list')
 def list():
-    conn = sql.connect("database.db")
-    conn.row_factory = sql.Row
+    #conn = sql.connect("database.db")
+    #conn.row_factory = sql.Row
 
-    cur = conn.cursor()
-    cur.execute("SELECT * FROM report")
-
-    rows = cur.fetchall();    
+    #cur = conn.cursor()
+    #cur.execute("SELECT * FROM report")
+    #rows = cur.fetchall(); 
+    rows = Report.query.all()
     return render_template("list.html", rows=rows)
-    conn.close()
+    #conn.close()
+    db.session.close()
 
 
 @app.route('/data')
@@ -68,9 +108,10 @@ def data():
 @app.route('/fig', methods = ['POST', 'GET'])
 def fig():
     if request.method == 'POST':
-        conn = sql.connect("database.db")
-        sqlstring = "SELECT * FROM report"
-        df = pd.read_sql(sqlstring,conn)
+        #conn = sql.connect("database.db")
+        #sqlstring = "SELECT * FROM report"
+        #df = pd.read_sql(sqlstring,conn)
+        df = pd.read_sql(Report.query.all())
     
         df["time_required"] = pd.to_datetime(df["endtime"]) - pd.to_datetime(df["starttime"])
         df["time_required(m)"] = df["time_required"].astype('timedelta64[m]')
@@ -153,7 +194,8 @@ def fig():
             
 
 
-        conn.close()
+        #conn.close()
+        db.session.close()
 
 
     
