@@ -119,7 +119,7 @@ def fig():
     
         df["time_required"] = pd.to_datetime(df["endtime"]) - pd.to_datetime(df["starttime"])
         df["time_required(m)"] = df["time_required"].astype('timedelta64[m]')
-        df["month"] = df["starttime"].apply(lambda x:x[:7])
+        df["month"] = df["starttime"].apply(lambda x:str(x)[:7])
         df = df[["personnel","month","time_required(m)"]]
 
         start = str(request.form['start'])
