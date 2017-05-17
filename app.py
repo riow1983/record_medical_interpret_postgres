@@ -113,7 +113,7 @@ def fig():
         #conn = sql.connect("database.db")
         #sqlstring = "SELECT * FROM report"
         #df = pd.read_sql(sqlstring,conn)
-        df = pd.read_sql_query(Report.query.all())
+        df = pd.DataFrame(Report.query.all())
     
         df["time_required"] = pd.to_datetime(df["endtime"]) - pd.to_datetime(df["starttime"])
         df["time_required(m)"] = df["time_required"].astype('timedelta64[m]')
