@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_heroku import Heroku
 
 import numpy as np
+import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import pandas as pd
