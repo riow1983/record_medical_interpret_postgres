@@ -73,7 +73,7 @@ def addrec():
 
             #cur.execute("INSERT INTO report (personnel,starttime,endtime,client,section,patient,country,summary) VALUES (?,?,?,?,?,?,?,?)", (personnel,starttime,endtime,client,section,patient,country,summary))
             #conn.commit()
-            reg = User(personnel, starttime, endtime, client, section, patient, country, summary)
+            reg = Report(personnel, starttime, endtime, client, section, patient, country, summary)
             db.session.add(reg)
             db.session.commit()
             msg = "Record successfully added"
