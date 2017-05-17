@@ -143,14 +143,14 @@ var demo = new Vue({
     gridData: [
     {% for row in rows %}
       { 
-        Personnel: '{{ row["personnel"] }}', 
-        Start: '{{ row["starttime"] }}', 
-        End: '{{ row["endtime"] }}', 
-        Client: '{{ row["client"] }}', 
-        Section: '{{ row["section"] }}', 
-        Patient: '{{ row["patient"] }}', 
-        Country: '{{ row["country"] }}',
-        Summary: {{ row["summary"].splitlines()|safe }} },
+        Personnel: '{{ row[1] }}', 
+        Start: '{{ row[2] }}', 
+        End: '{{ row[3] }}', 
+        Client: '{{ row[4] }}', 
+        Section: '{{ row[5] }}', 
+        Patient: '{{ row[6] }}', 
+        Country: '{{ row[7] }}',
+        Summary: {{ row[8].splitlines()|safe }} },
     {% endfor %}
     ]
   }

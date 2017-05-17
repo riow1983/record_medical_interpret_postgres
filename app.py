@@ -44,7 +44,7 @@ class Report(db.Model):
     def __repr__(self):
         return '<Personnel %r>' % self.personnel
 
-
+mycol = ["id","personnel", "starttime", "endtime", "client", "section", "patient", "country", "summary"] 
 
 
 @app.route('/')
@@ -96,7 +96,8 @@ def list():
     #cur = conn.cursor()
     #cur.execute("SELECT * FROM report")
     #rows = cur.fetchall(); 
-    rows = Report.query.all()
+    #rows = Report.query.all()
+    rows = db.session.execute("SELECT * FROM report;").fetchall()
     return render_template("list.html", rows=rows)
     #conn.close()
     db.session.close()
@@ -113,7 +114,8 @@ def fig():
         #conn = sql.connect("database.db")
         #sqlstring = "SELECT * FROM report"
         #df = pd.read_sql(sqlstring,conn)
-        df = pd.DataFrame(Report.query.all())
+        rows = db.session.execute("SELECT * FROM report;").fetchall()
+        df = pd.DataFrame(rows,columns=mycol)
     
         df["time_required"] = pd.to_datetime(df["endtime"]) - pd.to_datetime(df["starttime"])
         df["time_required(m)"] = df["time_required"].astype('timedelta64[m]')
