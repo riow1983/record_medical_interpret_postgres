@@ -11,10 +11,13 @@ import pandas as pd
 from functools import reduce
 from io import BytesIO
 
+import os
+
 app = Flask(__name__)
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/english'
 heroku = Heroku(app)
-app.secret_key = 'some_secret'
+#app.secret_key = os.environ["APP_SECRET_KEY"]
+app.secret_key = os.environ.get('APP_SECRET_KEY', 'my-secret-key')
 db = SQLAlchemy(app)
 
 
