@@ -1,6 +1,6 @@
 # The record system for medical interpretation in a hospital（English only)
 ### 医療通訳担当者（英語）のための通訳後記（反省録）保管システム
-### for PosgreSQL
+### for PosgreSQL with Dash produced by Plotly
 
 
 医療機関のスタッフが医療通訳の現場経験を記録しておき、後学に生かすためのシステムです。
@@ -33,6 +33,9 @@ https://jp.vuejs.org/v2/examples/grid-component.html
 matplotlibを使っています。集計にはpandasを使っています。バーチャートの下にデータテーブルを表示させています。
 こちらをほぼパクりました。
 https://matplotlib.org/examples/pylab_examples/table_demo.html
+
+#### 機能４：　ホームページにインタラクティブなリアルタイムプロットを追加
+Plotlyが最近（２０１７年６月頃（？））リリースしたDashというデータビジュアライゼーション用ライブラリを使ってホームページに現在の集計結果を表示させるようにしました。
 
 
 #### Requirements(すみません、バージョンとか細かいことは省略させてください)

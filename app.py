@@ -52,7 +52,8 @@ mycol = ["id","personnel", "starttime", "endtime", "client", "section", "patient
 
 @app.route('/')
 def home():
-    return render_template('home.html')
+    iframe = 'https://etr-dashapp.herokuapp.com/'
+    return render_template('home.html', iframe=iframe)
 
 @app.route('/enternew')
 def new_student():
